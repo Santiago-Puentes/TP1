@@ -3,8 +3,7 @@
 #include <string>
 #include <algorithm>
 #include <memory>
-#include <vector>
-#include <utility>
+
 
 using namespace std;
 
@@ -14,4 +13,5 @@ class personaje {
         virtual string getType() = 0;
         virtual int getMana() = 0;
         virtual int getHP() = 0;
+        virtual ~personaje() = default;
 };

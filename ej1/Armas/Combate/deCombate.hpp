@@ -1,5 +1,5 @@
 #pragma once
-#include "armas.hpp"
+#include "../armas.hpp"
 
 class deCombate : public armas {
     protected:
@@ -9,12 +9,11 @@ class deCombate : public armas {
         const string type;
         int damage;
     public:
-        deCombate(string n, int d, int l, const string t, int dam)
-        : name(n), durability(d), level(l), type(t), damage(dam) {}
-        string getName() override {};
-        int getLevel() override {};
-        string getType() override {};
-        int getDurability() override {};
-        void repair() override {};
+        deCombate(string n, int d, int l, const string t, int dam);
+        string getName() override;
+        int getLevel() override;
+        string getType() override;
+        int getDurability() override;
+        void repair() override;
         virtual int getDamage() = 0;
 };

@@ -1,5 +1,8 @@
 #include "guerreros.hpp"
 
+guerreros::guerreros(string n, int hp, int lvl, const string t, int m, pair<unique_ptr<deCombate>,unique_ptr<deCombate>>& w)
+    : name(n), HP(hp), level(lvl), type(t), mana(m), weapons(w) {}
+
 string guerreros::getName() {
     return name;
 }
@@ -18,10 +21,10 @@ int guerreros::getHP() {
 
 bool guerreros::addWeapon(unique_ptr<deCombate>& weapon) {
     if (!weapons.first) {
-        weapons.first = move(weapon);
+        weapons.first = std::move(weapon);
         return true;
     } else if (!weapons.second) {
-        weapons.second = move(weapon);
+        weapons.second = std::move(weapon);
         return true;
     }
     return false;

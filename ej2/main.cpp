@@ -28,26 +28,26 @@ unique_ptr<magicas> getArmaMagica() {
 
 unique_ptr<guerreros> getPersonajeGuerrero(pair<unique_ptr<deCombate>, unique_ptr<deCombate>> armasDeCombate) {
     switch(randomNumber(0,5)) {
-        case 0: return PersonajeFactory::crearPersonajeConArmaDeCombate(Guerreros::BÁRBARO, move(armasDeCombate));
-        case 1: return PersonajeFactory::crearPersonajeConArmaDeCombate(Guerreros::CABALLERO, move(armasDeCombate));
-        case 2: return PersonajeFactory::crearPersonajeConArmaDeCombate(Guerreros::GLADIADOR, move(armasDeCombate));
-        case 3: return PersonajeFactory::crearPersonajeConArmaDeCombate(Guerreros::MERCENARIO, move(armasDeCombate));
-        case 4: return PersonajeFactory::crearPersonajeConArmaDeCombate(Guerreros::PALADÍN, move(armasDeCombate));
+        case 0: return PersonajeFactory::crearPersonajeConArmaDeCombate(Guerreros::BÁRBARO, armasDeCombate);
+        case 1: return PersonajeFactory::crearPersonajeConArmaDeCombate(Guerreros::CABALLERO, armasDeCombate);
+        case 2: return PersonajeFactory::crearPersonajeConArmaDeCombate(Guerreros::GLADIADOR, armasDeCombate);
+        case 3: return PersonajeFactory::crearPersonajeConArmaDeCombate(Guerreros::MERCENARIO, armasDeCombate);
+        case 4: return PersonajeFactory::crearPersonajeConArmaDeCombate(Guerreros::PALADÍN, armasDeCombate);
         default: return nullptr;
     }
 }
 
 unique_ptr<magos> getPersonajeMago(pair<unique_ptr<magicas>, unique_ptr<magicas>> armasMagicas) {
     switch(randomNumber(0,4)) {
-        case 0: return PersonajeFactory::crearPersonajeConArmaMagica(Magos::BRUJO, move(armasMagicas));
-        case 1: return PersonajeFactory::crearPersonajeConArmaMagica(Magos::CONJURADOR, move(armasMagicas));
-        case 2: return PersonajeFactory::crearPersonajeConArmaMagica(Magos::HECHIZERO, move(armasMagicas));
-        case 3: return PersonajeFactory::crearPersonajeConArmaMagica(Magos::NIGROMANTE, move(armasMagicas));
+        case 0: return PersonajeFactory::crearPersonajeConArmaMagica(Magos::BRUJO, armasMagicas);
+        case 1: return PersonajeFactory::crearPersonajeConArmaMagica(Magos::CONJURADOR, armasMagicas);
+        case 2: return PersonajeFactory::crearPersonajeConArmaMagica(Magos::HECHIZERO, armasMagicas);
+        case 3: return PersonajeFactory::crearPersonajeConArmaMagica(Magos::NIGROMANTE, armasMagicas);
         default: return nullptr;
     }
 }
 
-void printMagos(vector<unique_ptr<magos>> personajes) {
+void printMagos(vector<unique_ptr<magos>>& personajes) {
     for (const auto& personaje : personajes) {
         if (personaje) {
             cout << "Nombre: " << personaje->getName() << endl;
@@ -60,7 +60,7 @@ void printMagos(vector<unique_ptr<magos>> personajes) {
     }
 }
 
-void printGuerreros(vector<unique_ptr<guerreros>> personajes) {
+void printGuerreros(vector<unique_ptr<guerreros>>& personajes) {
     for (const auto& personaje : personajes) {
         if (personaje) {
             cout << "Nombre: " << personaje->getName() << endl;
@@ -90,7 +90,7 @@ int main() {
         armas.second = (cantArmas > 1) ? getArmaMagica() : nullptr;
 
         unique_ptr<magos> currPersonaje = getPersonajeMago(move(armas));
-        if (currPersonaje) losMagos.push_back(currPersonaje);
+        if (currPersonaje) losMagos.push_back(move(currPersonaje));
     }
 
     for (int i = 0; i<cantGuerreros; i++) {
@@ -101,7 +101,7 @@ int main() {
         armas.second = (cantArmas > 1) ? getArmaDeCombate() : nullptr;
 
         unique_ptr<guerreros> currPersonaje = getPersonajeGuerrero(move(armas));
-        if (currPersonaje) losGuerreros.push_back(currPersonaje);
+        if (currPersonaje) losGuerreros.push_back(move(currPersonaje));
     }
 
     cout << "Personajes que salieron: " << endl;

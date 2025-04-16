@@ -2,8 +2,6 @@
 #include <iostream>
 #include <algorithm>
 #include <string>
-#include <vector>
-#include <utility>
 
 using namespace std;
 
@@ -14,4 +12,5 @@ class armas {
         virtual string getType() = 0;
         virtual int getDurability() = 0;
         virtual void repair() = 0;
+        virtual ~armas() = default;
 };

@@ -16,24 +16,22 @@ int magos::getHP() {
     return HP;
 }
 
-bool magos::addWeapon(unique_ptr<magicas>& weapon) {
+bool magos::addWeapon(unique_ptr<magicas> weapon) {
     if (!weapons.first) {
-        weapons.first = move(weapon);
+        weapons.first = std::move(weapon);
         return true;
-    }
-    if (!weapons.second) {
-        weapons.second = move(weapon);
+    } else if (!weapons.second) {
+        weapons.second = std::move(weapon);
         return true;
     }
     return false;
 }
 
-bool magos::removeWeapon(unique_ptr<magicas>& weapon) {
+bool magos::removeWeapon(unique_ptr<magicas> weapon) {
     if (weapons.first && weapons.first == weapon) {
         weapons.first.reset();
         return true;
-    }
-    if (weapons.second && weapons.second == weapon) {
+    } else if (weapons.second && weapons.second == weapon) {
         weapons.second.reset();
         return true;
     }
