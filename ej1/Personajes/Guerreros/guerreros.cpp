@@ -16,23 +16,28 @@ int guerreros::getHP() {
  return HP;
 }
 
-bool guerreros::addWeapon(shared_ptr<deCombate> weapon) {
-    if (weapons.size() < 2) {
-        weapons.push_back(weapon);
+bool guerreros::addWeapon(unique_ptr<deCombate>& weapon) {
+    if (!weapons.first) {
+        weapons.first = move(weapon);
+        return true;
+    } else if (!weapons.second) {
+        weapons.second = move(weapon);
         return true;
     }
     return false;
 }
 
-bool guerreros::removeWeapon(shared_ptr<deCombate> weapon) {
-    auto it = find(weapons.begin(), weapons.end(), weapon);
-    if (it != weapons.end()) {
-        weapons.erase(it);
+bool guerreros::removeWeapon(unique_ptr<deCombate>& weapon) {
+    if (weapons.first && weapons.first == weapon) {
+        weapons.first.reset();
+        return true;
+    } else if (weapons.second && weapons.second == weapon) {
+        weapons.second.reset();
         return true;
     }
     return false;
 }
 
-vector<shared_ptr<deCombate>>& guerreros::getWeapons() {
+pair<unique_ptr<deCombate>,unique_ptr<deCombate>>& guerreros::getWeapons() {
     return weapons;
 }

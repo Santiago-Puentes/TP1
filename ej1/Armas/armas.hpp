@@ -2,6 +2,8 @@
 #include <iostream>
 #include <algorithm>
 #include <string>
+#include <vector>
+#include <utility>
 
 using namespace std;
 

@@ -16,23 +16,30 @@ int magos::getHP() {
     return HP;
 }
 
-bool magos::addWeapon(shared_ptr<magicas> weapon) {
-    if (weapons.size() < 2) {
-        weapons.push_back(weapon);
+bool magos::addWeapon(unique_ptr<magicas>& weapon) {
+    if (!weapons.first) {
+        weapons.first = move(weapon);
+        return true;
+    }
+    if (!weapons.second) {
+        weapons.second = move(weapon);
         return true;
     }
     return false;
 }
 
-bool magos::removeWeapon(shared_ptr<magicas> weapon) {
-    auto it = find(weapons.begin(), weapons.end(), weapon);
-    if (it != weapons.end()) {
-        weapons.erase(it);
+bool magos::removeWeapon(unique_ptr<magicas>& weapon) {
+    if (weapons.first && weapons.first == weapon) {
+        weapons.first.reset();
+        return true;
+    }
+    if (weapons.second && weapons.second == weapon) {
+        weapons.second.reset();
         return true;
     }
     return false;
 }
 
-vector<shared_ptr<magicas>>& magos::getWeapons() {
+pair<unique_ptr<magicas>,unique_ptr<magicas>>& magos::getWeapons() {
     return weapons;
 }

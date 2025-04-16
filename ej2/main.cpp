@@ -5,7 +5,7 @@ int randomNumber(int M,int m) {
     return (rand() % (M - m)) + m;
 }
 
-shared_ptr<deCombate> getArmaDeCombate() {
+unique_ptr<deCombate> getArmaDeCombate() {
     switch(randomNumber(0,5)) {
         case 0: return PersonajeFactory::crearArmaDeCombate(Combate::ESPADA);
         case 1: return PersonajeFactory::crearArmaDeCombate(Combate::GARROTE);
@@ -16,7 +16,7 @@ shared_ptr<deCombate> getArmaDeCombate() {
     }
 }
 
-shared_ptr<magicas> getArmaMagica() {
+unique_ptr<magicas> getArmaMagica() {
     switch(randomNumber(0,4)) {
         case 0: return PersonajeFactory::crearArmaMagica(Magicas::AMULETO);
         case 1: return PersonajeFactory::crearArmaMagica(Magicas::BASTON);
@@ -26,49 +26,49 @@ shared_ptr<magicas> getArmaMagica() {
     }
 }
 
-shared_ptr<guerreros> getPersonajeGuerrero(pair<shared_ptr<deCombate>, shared_ptr<deCombate>> armasDeCombate) {
+unique_ptr<guerreros> getPersonajeGuerrero(pair<unique_ptr<deCombate>, unique_ptr<deCombate>> armasDeCombate) {
     switch(randomNumber(0,5)) {
-        case 0: return PersonajeFactory::crearPersonajeConArmaDeCombate(Guerreros::BÁRBARO, armasDeCombate);
-        case 1: return PersonajeFactory::crearPersonajeConArmaDeCombate(Guerreros::CABALLERO, armasDeCombate);
-        case 2: return PersonajeFactory::crearPersonajeConArmaDeCombate(Guerreros::GLADIADOR, armasDeCombate);
-        case 3: return PersonajeFactory::crearPersonajeConArmaDeCombate(Guerreros::MERCENARIO, armasDeCombate);
-        case 4: return PersonajeFactory::crearPersonajeConArmaDeCombate(Guerreros::PALADÍN, armasDeCombate);
+        case 0: return PersonajeFactory::crearPersonajeConArmaDeCombate(Guerreros::BÁRBARO, move(armasDeCombate));
+        case 1: return PersonajeFactory::crearPersonajeConArmaDeCombate(Guerreros::CABALLERO, move(armasDeCombate));
+        case 2: return PersonajeFactory::crearPersonajeConArmaDeCombate(Guerreros::GLADIADOR, move(armasDeCombate));
+        case 3: return PersonajeFactory::crearPersonajeConArmaDeCombate(Guerreros::MERCENARIO, move(armasDeCombate));
+        case 4: return PersonajeFactory::crearPersonajeConArmaDeCombate(Guerreros::PALADÍN, move(armasDeCombate));
         default: return nullptr;
     }
 }
 
-shared_ptr<magos> getPersonajeMago(pair<shared_ptr<magicas>, shared_ptr<magicas>> armasMagicas) {
+unique_ptr<magos> getPersonajeMago(pair<unique_ptr<magicas>, unique_ptr<magicas>> armasMagicas) {
     switch(randomNumber(0,4)) {
-        case 0: return PersonajeFactory::crearPersonajeConArmaMagica(Magos::BRUJO, armasMagicas);
-        case 1: return PersonajeFactory::crearPersonajeConArmaMagica(Magos::CONJURADOR, armasMagicas);
-        case 2: return PersonajeFactory::crearPersonajeConArmaMagica(Magos::HECHIZERO, armasMagicas);
-        case 3: return PersonajeFactory::crearPersonajeConArmaMagica(Magos::NIGROMANTE, armasMagicas);
+        case 0: return PersonajeFactory::crearPersonajeConArmaMagica(Magos::BRUJO, move(armasMagicas));
+        case 1: return PersonajeFactory::crearPersonajeConArmaMagica(Magos::CONJURADOR, move(armasMagicas));
+        case 2: return PersonajeFactory::crearPersonajeConArmaMagica(Magos::HECHIZERO, move(armasMagicas));
+        case 3: return PersonajeFactory::crearPersonajeConArmaMagica(Magos::NIGROMANTE, move(armasMagicas));
         default: return nullptr;
     }
 }
 
-void printMagos(vector<shared_ptr<magos>> personajes) {
+void printMagos(vector<unique_ptr<magos>> personajes) {
     for (const auto& personaje : personajes) {
         if (personaje) {
             cout << "Nombre: " << personaje->getName() << endl;
             cout << "Mana: " << personaje->getMana() << endl;
             cout << "Tipo: " << personaje->getType() << endl;
             cout << "HP: " << personaje->getHP() << endl;
-            if (personaje->getWeapons()[0]) cout << "Arma 1: " << personaje->getWeapons()[0] << endl;
-            if (personaje->getWeapons()[1]) cout << "Arma 2: " << personaje->getWeapons()[1] << endl;
+            if (personaje->getWeapons().first) cout << "Arma 1: " << personaje->getWeapons().first->getName() << endl;
+            if (personaje->getWeapons().second) cout << "Arma 2: " << personaje->getWeapons().second->getName() << endl;
         }
     }
 }
 
-void printGuerreros(vector<shared_ptr<guerreros>> personajes) {
+void printGuerreros(vector<unique_ptr<guerreros>> personajes) {
     for (const auto& personaje : personajes) {
         if (personaje) {
             cout << "Nombre: " << personaje->getName() << endl;
             cout << "Mana: " << personaje->getMana() << endl;
             cout << "Tipo: " << personaje->getType() << endl;
             cout << "HP: " << personaje->getHP() << endl;
-            if (personaje->getWeapons()[0]) cout << "Arma 1: " << personaje->getWeapons()[0] << endl;
-            if (personaje->getWeapons()[1]) cout << "Arma 2: " << personaje->getWeapons()[1] << endl;
+            if (personaje->getWeapons().first) cout << "Arma 1: " << personaje->getWeapons().first->getName() << endl;
+            if (personaje->getWeapons().second) cout << "Arma 2: " << personaje->getWeapons().second->getName() << endl;
         }
     }
 }
@@ -79,28 +79,28 @@ int main() {
     int cantMagos = randomNumber(8,3);
     int cantGuerreros = randomNumber(8,3);
 
-    vector<shared_ptr<magos>> losMagos;
-    vector<shared_ptr<guerreros>> losGuerreros;
+    vector<unique_ptr<magos>> losMagos;
+    vector<unique_ptr<guerreros>> losGuerreros;
 
     for (int i = 0; i<cantMagos; i++) {
         int cantArmas = randomNumber(0,3);
-        pair<shared_ptr<magicas>,shared_ptr<magicas>> armas;
+        pair<unique_ptr<magicas>,unique_ptr<magicas>> armas;
 
         armas.first = (cantArmas > 0) ? getArmaMagica() : nullptr;
         armas.second = (cantArmas > 1) ? getArmaMagica() : nullptr;
 
-        shared_ptr<magos> currPersonaje = getPersonajeMago(armas);
+        unique_ptr<magos> currPersonaje = getPersonajeMago(move(armas));
         if (currPersonaje) losMagos.push_back(currPersonaje);
     }
 
     for (int i = 0; i<cantGuerreros; i++) {
         int cantArmas = randomNumber(0,3);
-        pair<shared_ptr<deCombate>,shared_ptr<deCombate>> armas;
+        pair<unique_ptr<deCombate>,unique_ptr<deCombate>> armas;
 
         armas.first = (cantArmas > 0) ? getArmaDeCombate() : nullptr;
         armas.second = (cantArmas > 1) ? getArmaDeCombate() : nullptr;
 
-        shared_ptr<guerreros> currPersonaje = getPersonajeGuerrero(armas);
+        unique_ptr<guerreros> currPersonaje = getPersonajeGuerrero(move(armas));
         if (currPersonaje) losGuerreros.push_back(currPersonaje);
     }
 

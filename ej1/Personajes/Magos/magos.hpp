@@ -9,17 +9,17 @@ class magos : public personaje {
         int level;
         const string type;
         int mana;
-        vector<shared_ptr<magicas>> weapons;
+        pair<unique_ptr<magicas>,unique_ptr<magicas>> weapons;
     public:
-        magos(string n, int hp, int lvl, const string t, int m, vector<shared_ptr<magicas>> w)
-        : name(n), HP(hp), level(lvl), type(t), mana(m), weapons(w) {}
+        magos(string n, int hp, int lvl, const string t, int m, pair<unique_ptr<magicas>,unique_ptr<magicas>> w)
+        : name(n), HP(hp), level(lvl), type(t), mana(m), weapons(move(w)) {}
         string getName() override {};
         string getType() override {};
         int getMana() override {};
         int getHP() override {};
         virtual void gainHP() = 0;
         virtual void loseHP() = 0;
-        bool addWeapon(shared_ptr<magicas> weapon) {};
-        bool removeWeapon(shared_ptr<magicas> weapon) {};
-        vector<shared_ptr<magicas>>& getWeapons() {};    
+        bool addWeapon(unique_ptr<magicas>& weapon) {};
+        bool removeWeapon(unique_ptr<magicas>& weapon) {};
+        pair<unique_ptr<magicas>,unique_ptr<magicas>>& getWeapons() {};    
 };

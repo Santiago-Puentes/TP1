@@ -62,10 +62,10 @@ enum class Magos {
 
 class PersonajeFactory {
     public:
-        static shared_ptr<personaje> crearGuerrero(Guerreros personaje);
-        static shared_ptr<personaje> crearMago(Magos personaje);
-        static shared_ptr<magicas> crearArmaMagica(Magicas armaMagica);
-        static shared_ptr<deCombate> crearArmaDeCombate(Combate armaDeCombate);
-        static shared_ptr<magos> crearPersonajeConArmaMagica(Magos personaje, pair<shared_ptr<magicas>, shared_ptr<magicas>> armasMagicas);
-        static shared_ptr<guerreros> crearPersonajeConArmaDeCombate(Guerreros personaje, pair<shared_ptr<deCombate>, shared_ptr<deCombate>> armasDeCombate);
+        static unique_ptr<personaje> crearGuerrero(Guerreros personaje);
+        static unique_ptr<personaje> crearMago(Magos personaje);
+        static unique_ptr<magicas> crearArmaMagica(Magicas armaMagica);
+        static unique_ptr<deCombate> crearArmaDeCombate(Combate armaDeCombate);
+        static unique_ptr<magos> crearPersonajeConArmaMagica(Magos personaje, pair<unique_ptr<magicas>, unique_ptr<magicas>> armasMagicas);
+        static unique_ptr<guerreros> crearPersonajeConArmaDeCombate(Guerreros personaje, pair<unique_ptr<deCombate>, unique_ptr<deCombate>> armasDeCombate);
 };
