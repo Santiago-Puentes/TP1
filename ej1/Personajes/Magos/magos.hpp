@@ -1,5 +1,6 @@
+#pragma once
 #include "personajes.hpp"
-#include "../Armas/Mágicas/magicas.hpp"
+#include "../../Armas/Mágicas/magicas.hpp"
 
 class magos : public personaje {
     protected:
@@ -16,9 +17,9 @@ class magos : public personaje {
         string getType() override {};
         int getMana() override {};
         int getHP() override {};
-        void gainHP() override {};
-        void loseHP() override {};
+        virtual void gainHP() = 0;
+        virtual void loseHP() = 0;
         bool addWeapon(shared_ptr<magicas> weapon) {};
         bool removeWeapon(shared_ptr<magicas> weapon) {};
-        virtual const vector<shared_ptr<magicas>>& getWeapons() const = 0;    
+        vector<shared_ptr<magicas>>& getWeapons() {};    
 };

@@ -1,5 +1,9 @@
 #include "mercenario.hpp"
 
-const vector<shared_ptr<deCombate>>& mercenario::getWeapons() const {
-    return weapons;
+void mercenario::gainHP() {
+    HP = min(100,HP+(rand() % 21 + 10));
+}
+
+void mercenario::loseHP() {
+    HP -= rand() % 51;
 }

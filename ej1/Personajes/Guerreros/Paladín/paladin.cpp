@@ -1,5 +1,9 @@
 #include "paladin.hpp"
 
-const vector<shared_ptr<deCombate>>& paladin::getWeapons() const {
-    return weapons;
+void paladin::gainHP() {
+    HP = min(100,HP+(rand() % 21 + 10));
+}
+
+void paladin::loseHP() {
+    HP -= rand() % 51;
 }

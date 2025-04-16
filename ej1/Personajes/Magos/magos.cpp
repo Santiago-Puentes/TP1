@@ -16,14 +16,6 @@ int magos::getHP() {
     return HP;
 }
 
-void magos::gainHP() {
-    HP = min(100,HP+(rand() % 36));
-}
-
-void magos::loseHP() {
-    HP -= rand() % 51;
-}
-
 bool magos::addWeapon(shared_ptr<magicas> weapon) {
     if (weapons.size() < 2) {
         weapons.push_back(weapon);
@@ -41,6 +33,6 @@ bool magos::removeWeapon(shared_ptr<magicas> weapon) {
     return false;
 }
 
-const vector<shared_ptr<magicas>>& magos::getWeapons() const {
+vector<shared_ptr<magicas>>& magos::getWeapons() {
     return weapons;
 }

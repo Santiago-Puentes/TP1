@@ -1,5 +1,6 @@
+#pragma once
 #include "personajes.hpp"
-#include "../Armas/Combate/deCombate.hpp"
+#include "../../Armas/Combate/deCombate.hpp"
 
 class guerreros : public personaje {
     protected:
@@ -16,9 +17,9 @@ class guerreros : public personaje {
         string getType() override {};
         int getMana() override {};
         int getHP() override {};
-        void gainHP() override {};
-        void loseHP() override {};
+        virtual void gainHP() = 0;
+        virtual void loseHP() = 0;
         bool addWeapon(shared_ptr<deCombate> weapon) {};
         bool removeWeapon(shared_ptr<deCombate> weapon) {};
-        virtual const vector<shared_ptr<deCombate>>& getWeapons() const = 0;    
+        vector<shared_ptr<deCombate>>& getWeapons() {};
 };

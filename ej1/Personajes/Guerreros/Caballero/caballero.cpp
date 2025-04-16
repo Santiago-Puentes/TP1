@@ -1,5 +1,9 @@
 #include "caballero.hpp"
 
-const vector<shared_ptr<deCombate>>& caballero::getWeapons() const {
-    return weapons;
+void caballero::gainHP() {
+    HP = min(100,HP+(rand() % 21 + 10));
+}
+
+void caballero::loseHP() {
+    HP -= rand() % 51;
 }

@@ -1,3 +1,4 @@
+#pragma once
 #include "armas.hpp"
 
 class deCombate : public armas {

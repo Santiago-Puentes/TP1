@@ -1,5 +1,9 @@
 #include "barbaro.hpp"
 
-const vector<shared_ptr<deCombate>>& barbaro::getWeapons() const {
-    return weapons;
+void barbaro::gainHP() {
+    HP = min(100,HP+(rand() % 21 + 10));
+}
+
+void barbaro::loseHP() {
+    HP -= rand() % 51;
 }

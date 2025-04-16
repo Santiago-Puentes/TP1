@@ -1,5 +1,9 @@
 #include "gladiador.hpp"
 
-const vector<shared_ptr<deCombate>>& gladiador::getWeapons() const {
-    return weapons;
+void gladiador::gainHP() {
+    HP = min(100,HP+(rand() % 21 + 10));
+}
+
+void gladiador::loseHP() {
+    HP -= rand() % 51;
 }

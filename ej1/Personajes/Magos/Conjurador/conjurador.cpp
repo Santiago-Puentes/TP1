@@ -1,5 +1,9 @@
 #include "conjurador.hpp"
 
-const vector<shared_ptr<magicas>>& conjurador::getWeapons() const {
-    return weapons;
+void conjurador::gainHP() {
+    HP = min(100,HP+(rand() % 21 + 10));
+}
+
+void conjurador::loseHP() {
+    HP -= rand() % 51;
 }

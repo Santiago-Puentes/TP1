@@ -1,5 +1,9 @@
 #include "nigromante.hpp"
 
-const vector<shared_ptr<magicas>>& nigromante::getWeapons() const {
-    return weapons;
+void nigromante::gainHP() {
+    HP = min(100,HP+(rand() % 21 + 10));
+}
+
+void nigromante::loseHP() {
+    HP -= rand() % 51;
 }

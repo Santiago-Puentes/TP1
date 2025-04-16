@@ -1,3 +1,4 @@
+#pragma once
 #include "../ej1/Armas/Mágicas/Amuleto/amuleto.hpp"
 #include "../ej1/Armas/Mágicas/Bastón/baston.hpp"
 #include "../ej1/Armas/Mágicas/Libro de Hechizos/libroDeHechizos.hpp"
@@ -29,11 +30,14 @@
 #include <vector>
 using namespace std;
 
-enum class Armas {
+enum class Magicas {
     AMULETO,
     LIBRO_DE_HECHIZOS,
     BASTON,
     POCION,
+};
+
+enum class Combate {
     ESPADA,
     GARROTE,
     HACHA_DOBLE,
@@ -41,12 +45,15 @@ enum class Armas {
     LANZA,
 };
 
-enum class Personajes {
+enum class Guerreros {
     BÁRBARO,
     CABALLERO,
     PALADÍN,
     MERCENARIO,
     GLADIADOR,
+};
+
+enum class Magos {
     BRUJO,
     CONJURADOR,
     HECHIZERO,
@@ -55,7 +62,10 @@ enum class Personajes {
 
 class PersonajeFactory {
     public:
-        static shared_ptr<personaje> crearPersonaje(Personajes personaje);
-        static shared_ptr<armas> crearArma(Armas arma);
-        static shared_ptr<personaje> crearPersonajeConArma(Personajes personaje, pair<shared_ptr<armas>, shared_ptr<armas>> armas);
+        static shared_ptr<personaje> crearGuerrero(Guerreros personaje);
+        static shared_ptr<personaje> crearMago(Magos personaje);
+        static shared_ptr<magicas> crearArmaMagica(Magicas armaMagica);
+        static shared_ptr<deCombate> crearArmaDeCombate(Combate armaDeCombate);
+        static shared_ptr<magos> crearPersonajeConArmaMagica(Magos personaje, pair<shared_ptr<magicas>, shared_ptr<magicas>> armasMagicas);
+        static shared_ptr<guerreros> crearPersonajeConArmaDeCombate(Guerreros personaje, pair<shared_ptr<deCombate>, shared_ptr<deCombate>> armasDeCombate);
 };

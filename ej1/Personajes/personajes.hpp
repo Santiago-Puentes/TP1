@@ -1,3 +1,4 @@
+#pragma once
 #include <iostream>
 #include <string>
 #include <algorithm>
@@ -11,6 +12,4 @@ class personaje {
         virtual string getType() = 0;
         virtual int getMana() = 0;
         virtual int getHP() = 0;
-        virtual void gainHP() = 0;
-        virtual void loseHP() = 0;
 };

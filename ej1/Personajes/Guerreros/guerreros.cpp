@@ -16,14 +16,6 @@ int guerreros::getHP() {
  return HP;
 }
 
-void guerreros::gainHP() {
-    HP = min(100,HP+(rand() % 21 + 10));
-}
-
-void guerreros::loseHP() {
-    HP -= rand() % 51;
-}
-
 bool guerreros::addWeapon(shared_ptr<deCombate> weapon) {
     if (weapons.size() < 2) {
         weapons.push_back(weapon);
@@ -39,4 +31,8 @@ bool guerreros::removeWeapon(shared_ptr<deCombate> weapon) {
         return true;
     }
     return false;
+}
+
+vector<shared_ptr<deCombate>>& guerreros::getWeapons() {
+    return weapons;
 }
