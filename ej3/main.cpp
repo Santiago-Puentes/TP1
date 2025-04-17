@@ -35,10 +35,16 @@ int main() {
     int eleccionArma;
     cin >> eleccionArma;
     unique_ptr<magicas> arma1 = PersonajeFactory::crearArmaMagica(static_cast<Magicas>(eleccionArma));
+    while (arma1 == nullptr) {
+        unique_ptr<magicas> arma1 = PersonajeFactory::crearArmaMagica(static_cast<Magicas>(eleccionArma));
+    }
     pair<unique_ptr<magicas>,unique_ptr<magicas>> armas1 = make_pair(move(arma1), nullptr);
     unique_ptr<magos> personajeArmado1 = PersonajeFactory::crearPersonajeConArmaMagica(static_cast<Magos>(eleccionPersonaje), armas1);
     int armaRandom = randomNumber(2,0);
     unique_ptr<deCombate> arma2 = PersonajeFactory::crearArmaDeCombate(static_cast<Combate>(armaRandom));
+    while (arma2 == nullptr) {
+        unique_ptr<deCombate> arma2 = PersonajeFactory::crearArmaDeCombate(static_cast<Combate>(armaRandom));
+    }
     pair<unique_ptr<deCombate>,unique_ptr<deCombate>> armas2 = make_pair(move(arma2), nullptr);
     unique_ptr<guerreros> personajeArmado2 = PersonajeFactory::crearPersonajeConArmaDeCombate(static_cast<Guerreros>(rand() % 4),armas2);
 
@@ -81,11 +87,17 @@ int main() {
     int eleccionArma;
     cin >> eleccionArma;
     unique_ptr<deCombate> arma1 = PersonajeFactory::crearArmaDeCombate(static_cast<Combate>(eleccionArma));
+    while (arma1 == nullptr) {
+        unique_ptr<deCombate> arma1 = PersonajeFactory::crearArmaDeCombate(static_cast<Combate>(eleccionArma));
+    }
     pair<unique_ptr<deCombate>,unique_ptr<deCombate>> armas1 = make_pair(move(arma1), nullptr);
     unique_ptr<guerreros> personajeArmado1 = PersonajeFactory::crearPersonajeConArmaDeCombate(static_cast<Guerreros>(eleccionPersonaje), armas1);
 
     int armaRandom = randomNumber(2,0);
     unique_ptr<magicas> arma2 = PersonajeFactory::crearArmaMagica(static_cast<Magicas>(armaRandom));
+    while (arma2 == nullptr) {
+        unique_ptr<magicas> arma2 = PersonajeFactory::crearArmaMagica(static_cast<Magicas>(armaRandom));
+    }
     pair<unique_ptr<magicas>,unique_ptr<magicas>> armas2 = make_pair(move(arma2), nullptr);
     unique_ptr<magos> personajeArmado2 = PersonajeFactory::crearPersonajeConArmaMagica(static_cast<Magos>(randomNumber(4,0)),armas2);
 

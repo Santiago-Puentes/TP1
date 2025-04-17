@@ -8,5 +8,5 @@ void brujo::gainHP() {
 }
 
 void brujo::loseHP() {
-    HP -= rand() % 51;
+    HP -= 10;
 }

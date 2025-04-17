@@ -8,5 +8,5 @@ void gladiador::gainHP() {
 }
 
 void gladiador::loseHP() {
-    HP -= rand() % 51;
+    HP -= 10;
 }

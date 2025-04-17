@@ -8,5 +8,5 @@ void paladin::gainHP() {
 }
 
 void paladin::loseHP() {
-    HP -= rand() % 51;
+    HP -= 10;
 }

@@ -8,5 +8,5 @@ void hechizero::gainHP() {
 }
 
 void hechizero::loseHP() {
-    HP -= rand() % 51;
+    HP -= 10;
 }

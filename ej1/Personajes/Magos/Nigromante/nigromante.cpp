@@ -8,5 +8,5 @@ void nigromante::gainHP() {
 }
 
 void nigromante::loseHP() {
-    HP -= rand() % 51;
+    HP -= 10;
 }

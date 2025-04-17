@@ -8,5 +8,5 @@ void caballero::gainHP() {
 }
 
 void caballero::loseHP() {
-    HP -= rand() % 51;
+    HP -= 10;
 }

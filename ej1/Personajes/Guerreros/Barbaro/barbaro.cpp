@@ -8,5 +8,5 @@ void barbaro::gainHP() {
 }
 
 void barbaro::loseHP() {
-    HP -= rand() % 51;
+    HP -= 10;
 }

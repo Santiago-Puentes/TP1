@@ -8,5 +8,5 @@ void conjurador::gainHP() {
 }
 
 void conjurador::loseHP() {
-    HP -= rand() % 51;
+    HP -= 10;
 }

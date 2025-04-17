@@ -8,5 +8,5 @@ void mercenario::gainHP() {
 }
 
 void mercenario::loseHP() {
-    HP -= rand() % 51;
+    HP -= 10;
 }
