@@ -16,7 +16,7 @@
 #include "../ej1/Personajes/Guerreros/Mercenario/mercenario.hpp"
 #include "../ej1/Personajes/Guerreros/Paladin/paladin.hpp"
 
-#include "../ej1/Personajes/Magos/Brujo/brujo.cpp"
+#include "../ej1/Personajes/Magos/Brujo/brujo.hpp"
 #include "../ej1/Personajes/Magos/Conjurador/conjurador.hpp"
 #include "../ej1/Personajes/Magos/Hechizero/hechizero.hpp"
 #include "../ej1/Personajes/Magos/Nigromante/nigromante.hpp"

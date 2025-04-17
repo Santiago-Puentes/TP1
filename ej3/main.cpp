@@ -1,5 +1,9 @@
 #include "main.hpp"
 
+int randomNumber(int M,int m) {
+    return (rand() % (M - m)) + m;
+}
+
 int calculateDamage(Ataque a1, Ataque a2) {
     if (a1 == a2) return 0;
     if ((a1 == GOLPE_FUERTE && a2 == GOLPE_RAPIDO) ||
@@ -30,9 +34,44 @@ int main() {
     cout << "Eliga arma para su personaje: (0) Amuleto, (1) Libro de Hechizos, (2) Bastón, (3) Poción" << endl;
     int eleccionArma;
     cin >> eleccionArma;
-    auto arma = PersonajeFactory::crearArmaMagica(static_cast<Magicas>(eleccionArma));
-    pair<unique_ptr<magicas>,unique_ptr<magicas>> armas1 = make_pair(arma, nullptr);
+    unique_ptr<magicas> arma1 = PersonajeFactory::crearArmaMagica(static_cast<Magicas>(eleccionArma));
+    pair<unique_ptr<magicas>,unique_ptr<magicas>> armas1 = make_pair(move(arma1), nullptr);
     unique_ptr<magos> personajeArmado1 = PersonajeFactory::crearPersonajeConArmaMagica(static_cast<Magos>(eleccionPersonaje), armas1);
+    int armaRandom = randomNumber(2,0);
+    unique_ptr<deCombate> arma2 = PersonajeFactory::crearArmaDeCombate(static_cast<Combate>(armaRandom));
+    pair<unique_ptr<deCombate>,unique_ptr<deCombate>> armas2 = make_pair(move(arma2), nullptr);
+    unique_ptr<guerreros> personajeArmado2 = PersonajeFactory::crearPersonajeConArmaDeCombate(static_cast<Guerreros>(rand() % 4),armas2);
+
+    while (personajeArmado1->getHP() > 0 && personajeArmado2->getHP() > 0) {
+
+        cout << "\n" << personajeArmado1->getName() << " tiene " << personajeArmado1->getHP()
+        << " HP y " << personajeArmado2->getName() << " tiene " << personajeArmado2->getHP() << " HP.\n";
+
+        mostrarOpciones();
+        int eleccion1;
+        cin >> eleccion1;
+
+        int eleccion2 = (rand() % 3) + 1;
+        int resultado = calculateDamage(static_cast<Ataque>(eleccion1), static_cast<Ataque>(eleccion2));
+        
+        if (resultado == 10) {
+            personajeArmado2 -> loseHP();
+            cout << personajeArmado1->getName() << " ataca con " << personajeArmado1->getWeapons().first->getName()
+                      << " y hace 10 puntos de daño a " << personajeArmado2->getName() << ".\n";
+        } else if (resultado == -10) {
+            personajeArmado1 -> loseHP();
+            cout << personajeArmado2->getName() << " ataca con " << personajeArmado2->getWeapons().first->getName()
+                      << " y hace 10 puntos de daño a " << personajeArmado1->getName() << ".\n";
+        } else {
+            cout << "Ambos eligieron la misma acción. ¡Empate! Sin daño.\n";
+        }
+    }
+    if (personajeArmado1->getHP() <= 0) {
+        cout << "Gana " << personajeArmado2->getName() << endl;
+    } else {
+        cout << "Gana " << personajeArmado1->getName() << endl;
+    }
+
     } else {
 
     cout << "Eliga un Guerrero: (0) Espadachín, (1) Bárbaro, (2) Paladín, (3) Caballero" << endl;
@@ -41,50 +80,44 @@ int main() {
     cout << "Eliga arma para su personaje: (0) Espada, (1) Garrote, (2) Hacha Doble, (3) Hacha Simple, (4) Lanza" << endl;
     int eleccionArma;
     cin >> eleccionArma;
-    auto arma = PersonajeFactory::crearArmaDeCombate(static_cast<Combate>(eleccionArma));
-    pair<unique_ptr<deCombate>,unique_ptr<deCombate>> armas1 = make_pair(arma, nullptr);
+    unique_ptr<deCombate> arma1 = PersonajeFactory::crearArmaDeCombate(static_cast<Combate>(eleccionArma));
+    pair<unique_ptr<deCombate>,unique_ptr<deCombate>> armas1 = make_pair(move(arma1), nullptr);
     unique_ptr<guerreros> personajeArmado1 = PersonajeFactory::crearPersonajeConArmaDeCombate(static_cast<Guerreros>(eleccionPersonaje), armas1);
-    }
 
-    
+    int armaRandom = randomNumber(2,0);
+    unique_ptr<magicas> arma2 = PersonajeFactory::crearArmaMagica(static_cast<Magicas>(armaRandom));
+    pair<unique_ptr<magicas>,unique_ptr<magicas>> armas2 = make_pair(move(arma2), nullptr);
+    unique_ptr<magos> personajeArmado2 = PersonajeFactory::crearPersonajeConArmaMagica(static_cast<Magos>(randomNumber(4,0)),armas2);
 
-    auto jugador1 = tipo1 == 1 ? PersonajeFactory::crearMago(nroPersonaje);
-    jugador1->setArma(PersonajeFactory::crearArma("espada"));
+    while (personajeArmado1->getHP() > 0 && personajeArmado2->getHP() > 0) {
 
-    auto jugador2 = PersonajeFactory::crearPersonajeAleatorio();
-    jugador2->setArma(PersonajeFactory::crearArmaAleatoria());
-
-    int hp1 = 100, hp2 = 100;
-
-    while (hp1 > 0 && hp2 > 0) {
-        cout << "\n" << jugador1->getNombre() << " tiene " << hp1
-                  << " HP y " << jugador2->getNombre() << " tiene " << hp2 << " HP.\n";
+        cout << "\n" << personajeArmado1->getName() << " tiene " << personajeArmado1->getHP()
+        << " HP y " << personajeArmado2->getName() << " tiene " << personajeArmado2->getHP() << " HP.\n";
 
         mostrarOpciones();
         int eleccion1;
         cin >> eleccion1;
 
         int eleccion2 = (rand() % 3) + 1;
-
-        int resultado = calcularDanio(static_cast<Ataque>(eleccion1), static_cast<Ataque>(eleccion2));
-
+        int resultado = calculateDamage(static_cast<Ataque>(eleccion1), static_cast<Ataque>(eleccion2));
+        
         if (resultado == 10) {
-            hp2 -= 10;
-            std::cout << jugador1->getNombre() << " ataca con " << jugador1->getArma()->getNombre()
-                      << " y hace 10 puntos de daño a " << jugador2->getNombre() << ".\n";
+            personajeArmado2 -> loseHP();
+            cout << personajeArmado1->getName() << " ataca con " << personajeArmado1->getWeapons().first->getName()
+                      << " y hace 10 puntos de daño a " << personajeArmado2->getName() << ".\n";
         } else if (resultado == -10) {
-            hp1 -= 10;
-            std::cout << jugador2->getNombre() << " ataca con " << jugador2->getArma()->getNombre()
-                      << " y hace 10 puntos de daño a " << jugador1->getNombre() << ".\n";
+            personajeArmado1 -> loseHP();
+            cout << personajeArmado2->getName() << " ataca con " << personajeArmado2->getWeapons().first->getName()
+                      << " y hace 10 puntos de daño a " << personajeArmado1->getName() << ".\n";
         } else {
-            std::cout << "Ambos eligieron la misma acción. ¡Empate! Sin daño.\n";
+            cout << "Ambos eligieron la misma acción. ¡Empate! Sin daño.\n";
         }
     }
-
-    if (hp1 <= 0)
-        std::cout << jugador2->getNombre() << " gana la batalla!\n";
-    else
-        std::cout << jugador1->getNombre() << " gana la batalla!\n";
-
+    if (personajeArmado1->getHP() <= 0) {
+        cout << "Gana " << personajeArmado2->getName() << endl;
+    } else {
+        cout << "Gana " << personajeArmado1->getName() << endl;
+    }
+    }
     return 0;
 }

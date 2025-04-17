@@ -75,13 +75,12 @@ void printGuerreros(vector<unique_ptr<guerreros>>& personajes) {
 
 int main() {
     srand(time(0));
-
+    cout << "Personaje Factory" << endl;
     int cantMagos = randomNumber(8,3);
     int cantGuerreros = randomNumber(8,3);
 
     vector<unique_ptr<magos>> losMagos;
     vector<unique_ptr<guerreros>> losGuerreros;
-
     for (int i = 0; i<cantMagos; i++) {
         int cantArmas = randomNumber(0,3);
         pair<unique_ptr<magicas>,unique_ptr<magicas>> armas;
@@ -89,8 +88,8 @@ int main() {
         armas.first = (cantArmas > 0) ? getArmaMagica() : nullptr;
         armas.second = (cantArmas > 1) ? getArmaMagica() : nullptr;
 
-        unique_ptr<magos> currPersonaje = getPersonajeMago(move(armas));
-        if (currPersonaje) losMagos.push_back(move(currPersonaje));
+        unique_ptr<magos> currPersonaje = getPersonajeMago(std::move(armas));
+        if (currPersonaje) losMagos.push_back(std::move(currPersonaje));
     }
 
     for (int i = 0; i<cantGuerreros; i++) {
@@ -100,8 +99,8 @@ int main() {
         armas.first = (cantArmas > 0) ? getArmaDeCombate() : nullptr;
         armas.second = (cantArmas > 1) ? getArmaDeCombate() : nullptr;
 
-        unique_ptr<guerreros> currPersonaje = getPersonajeGuerrero(move(armas));
-        if (currPersonaje) losGuerreros.push_back(move(currPersonaje));
+        unique_ptr<guerreros> currPersonaje = getPersonajeGuerrero(std::move(armas));
+        if (currPersonaje) losGuerreros.push_back(std::move(currPersonaje));
     }
 
     cout << "Personajes que salieron: " << endl;

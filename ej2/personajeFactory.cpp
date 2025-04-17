@@ -45,8 +45,8 @@ unique_ptr<deCombate> PersonajeFactory::crearArmaDeCombate(Combate armaDeCombate
 unique_ptr<magos> PersonajeFactory::crearPersonajeConArmaMagica(Magos personaje, pair<unique_ptr<magicas>,unique_ptr<magicas>>& armasMagicas) {
     try {
         pair<unique_ptr<magicas>,unique_ptr<magicas>> armas;
-        if (armasMagicas.first) armas.first = move(armasMagicas.first);
-        if (armasMagicas.second) armas.second = move(armasMagicas.second);
+        if (armasMagicas.first) armas.first = std::move(armasMagicas.first);
+        if (armasMagicas.second) armas.second = std::move(armasMagicas.second);
         
         switch(personaje) {
             case Magos::BRUJO:
@@ -69,8 +69,8 @@ unique_ptr<magos> PersonajeFactory::crearPersonajeConArmaMagica(Magos personaje,
 unique_ptr<guerreros> PersonajeFactory::crearPersonajeConArmaDeCombate(Guerreros personaje, pair<unique_ptr<deCombate>,unique_ptr<deCombate>>& armasDeCombate) {
     try {
         pair<unique_ptr<deCombate>,unique_ptr<deCombate>> armas;
-        if (armasDeCombate.first) armas.first = move(armasDeCombate.first);
-        if (armasDeCombate.second) armas.second = move(armasDeCombate.second);
+        if (armasDeCombate.first) armas.first = std::move(armasDeCombate.first);
+        if (armasDeCombate.second) armas.second = std::move(armasDeCombate.second);
 
         switch(personaje) {
             case Guerreros::BÁRBARO:

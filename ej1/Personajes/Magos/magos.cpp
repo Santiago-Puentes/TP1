@@ -38,6 +38,6 @@ bool magos::removeWeapon(unique_ptr<magicas> weapon) {
     return false;
 }
 
-pair<unique_ptr<magicas>,unique_ptr<magicas>>& magos::getWeapons() {
+const pair<unique_ptr<magicas>,unique_ptr<magicas>>& magos::getWeapons() const {
     return weapons;
 }

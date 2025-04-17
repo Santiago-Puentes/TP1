@@ -21,5 +21,5 @@ class magos : public personaje {
         virtual void loseHP() = 0;
         bool addWeapon(unique_ptr<magicas> weapon);
         bool removeWeapon(unique_ptr<magicas> weapon);
-        pair<unique_ptr<magicas>,unique_ptr<magicas>>& getWeapons();
+        const pair<unique_ptr<magicas>,unique_ptr<magicas>>& getWeapons() const;
 };
